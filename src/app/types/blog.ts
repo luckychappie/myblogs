@@ -9,6 +9,6 @@ export interface Blog {
     content: string
     slug: string
     thumbnail: string
-    created_at: string
+    created_at: Date
     author: Author
 }

@@ -1,9 +1,9 @@
 "use client"
 import { useAuth } from "@/context/AuthContext";
 import ProtectedLayout from "../components/ProtectedLayout";
-import { Box, Button, Container, Divider, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, IconButton, TextField, Typography } from "@mui/material";
 import BlogCard from "../components/BlogCard";
-import { KeyboardDoubleArrowRight, RotateRight } from "@mui/icons-material";
+import { RotateRight, Search } from "@mui/icons-material";
 import { theme } from "../../../theme/Theme";
 import { grey } from "@mui/material/colors";
 
@@ -19,6 +19,12 @@ const ProtectedPage: React.FC = () => {
         <Typography variant="subtitle1" gutterBottom sx={{ color: grey[600], fontFamily: '-moz-initial', textAlign: 'center' }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit provident   adipisci est<br /> error assumenda repudiandae
         </Typography>
+        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+        <TextField sx={{width: 300}} size="small" id="outlined-basic" placeholder="Search here..." variant="outlined" />
+        <Button variant="contained">
+        <Search />
+        </Button>
+        </Box>
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box width={{ sm: '100%', md: '100%' }} sx={{ p: 3 , textAlign: 'center'}}>
             <Grid container spacing={3}>
