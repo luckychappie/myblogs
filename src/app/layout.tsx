@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
+import ThemeRegistry from "../../theme/ThemeRegistery";
+import Header from "./components/Header";
+import { Box } from "@mui/material";
+import AdvBox from "./components/AdvBox";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +22,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthProvider>
+          <ThemeRegistry options={{ key: 'mui-theme' }}>
+            <Box>
+              <Header />
+              <Box>
+                {children}
+              </Box>
+            </Box>
+          </ThemeRegistry>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
