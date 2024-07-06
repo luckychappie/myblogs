@@ -16,6 +16,10 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  showSnackbar: boolean;
+  setShowSnackbar: React.Dispatch<React.SetStateAction<boolean>>;
+  snackbarMessage: string;
+  setSnackbarMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -23,6 +27,8 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -58,7 +64,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout , setUser, loading, setLoading}}>
+    <AuthContext.Provider value={{ user, login, logout , setUser, loading, setLoading, showSnackbar, setShowSnackbar, snackbarMessage, setSnackbarMessage}}>
       {children}
     </AuthContext.Provider>
   );

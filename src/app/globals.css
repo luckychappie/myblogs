@@ -61,3 +61,10 @@
     margin-left: 5px;
     color: grey;
 }
+
+.register-link {
+    margin-left: 5px;
+    font-size: 15px;
+    color: var(--primary) !important;
+    font-weight: bold;
+}

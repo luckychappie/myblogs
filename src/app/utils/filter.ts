@@ -10,4 +10,8 @@ export const formatDate = (date?: Date): string => {
     } else {
         return ''
     }
-};
+}
+
+export const getImageUrl = (path: string): string => {
+    return `${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}${path}`;
+}

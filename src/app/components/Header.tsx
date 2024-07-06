@@ -1,21 +1,21 @@
 "use client";
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import { pink } from '@mui/material/colors';
 import Link from 'next/link'
-import { Avatar, Button, colors, Slide, Typography, useScrollTrigger } from '@mui/material';
-import { HomeMaxOutlined, Search } from '@mui/icons-material';
-import DownloadIcon from '@mui/icons-material/Download';
+import { Slide, Snackbar, Typography, useScrollTrigger } from '@mui/material';
 import Sidebar from './Sidebar';
 import GrassIcon from '@mui/icons-material/Grass';
 import { theme } from '../../../theme/Theme';
 import { navItems } from '../constants/menu';
+import AccountMenu from './AccountMenu';
+import { useAuth } from '@/context/AuthContext';
+import { Close } from '@mui/icons-material';
+import { red } from '@mui/material/colors';
 
 interface Props {
   window?: () => Window;
@@ -38,36 +38,14 @@ function HideOnScroll(props: Props) {
 
 function Header() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { user, showSnackbar, snackbarMessage, setShowSnackbar } = useAuth()
+
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false)
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
-  };
-
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
-
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setIsInstallable(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    setIsInstalled(isAppInstalled());
-    console.log('isInstalled : ' + isInstalled)
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
-  }, []);
-
-  const isAppInstalled = (): boolean => {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    const isIosStandalone = (window.navigator as any).standalone;
-    return isStandalone || isIosStandalone || document.referrer.startsWith('android-app://');
   };
 
   return (
@@ -76,7 +54,7 @@ function Header() {
         <Box>
           <AppBar position="fixed" sx={{ height: 38 }} elevation={1} className='appBar'>
             <Container maxWidth="xl">
-              <Toolbar disableGutters sx={{ height: 38, alignItems: 'center' }} className='appToolbar'>
+              <Toolbar disableGutters sx={{ display: 'flex', height: 38, alignItems: 'center' }} className='appToolbar'>
                 <Link href="/">
                   <GrassIcon sx={{ fontSize: 40, color: theme.palette.primary.main }} />
                 </Link>
@@ -88,6 +66,21 @@ function Header() {
                       </Typography>
                     ))
                   }
+
+                  {
+                     !user?.id ? (
+                      <Typography sx={{ fontSize: 15, fontWeight: 600, width: 150, textAlign: 'center' }}>
+                        <Link href='/auth/login' className='header-menu'> Login </Link>
+                      </Typography>
+                     ) : (
+                      <Box>
+                        <AccountMenu />
+                      </Box>
+                     )
+                  }
+                  
+
+                  
 
                 </Box>
 
@@ -110,6 +103,24 @@ function Header() {
 
       </HideOnScroll>
       <Toolbar />
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={showSnackbar}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+        key={'center'}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <Close fontSize="small" />
+          </IconButton>
+        }
+      />
     </>
   );
 }
