@@ -61,7 +61,7 @@ function Header() {
                 <Box sx={{ flexGrow: 1, justifyContent: 'center', display: { xs: 'flex' } }}>
                   {
                     navItems.map((item) => (
-                      <Typography sx={{ fontSize: 15, fontWeight: 600, width: 150, textAlign: 'center' }}>
+                      <Typography key={item.title} sx={{ fontSize: 15, fontWeight: 600, width: 150, textAlign: 'center' }}>
                         <Link href={item.link} className='header-menu'> {item.title} </Link>
                       </Typography>
                     ))

@@ -7,6 +7,9 @@ import { grey } from "@mui/material/colors";
 const About = () => {
     return (
         <Box sx={{ mt: 0 }}>
+            <div>
+                <title>About Us</title>
+            </div>
             <Typography variant="h4" gutterBottom className="title" sx={{ pt: 4, fontSize: 25, fontWeight: 600, color: theme.palette.primary.main, fontFamily: 'series', textAlign: 'center', letterSpacing: 3 }}>
                 About Us
             </Typography>

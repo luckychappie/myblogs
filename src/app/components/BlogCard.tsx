@@ -18,8 +18,8 @@ const BlogCard = (props: Props) => {
                 <CardMedia
                     component="img"
                     height="140"
-                    image="/travel-blog.jpg"
-                    alt="green iguana"
+                    image="/blog6.jpg"
+                    alt={props.blog.title}
                 />
                 <CardContent>
                     <Typography textAlign='left' sx={{ color: theme.palette.primary.main, fontWeight: 500 }} gutterBottom variant="h5" component="div">

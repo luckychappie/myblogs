@@ -15,7 +15,7 @@ const AdvBox = () => {
             </Typography>
 
             <Box sx={{width: '100%', mt: 3, height: 100}}>
-                <img src='/blog1.jpg' width={'100%'} height={220} />
+                <img src='/blog2.jpg' width={'100%'} height={220} />
             </Box>
         </Box>
     </>

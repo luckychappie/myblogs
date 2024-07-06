@@ -4,7 +4,7 @@ import BlogCard from "../components/BlogCard";
 import { RotateRight, Search } from "@mui/icons-material";
 import { theme } from "../../../theme/Theme";
 import { grey } from "@mui/material/colors";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Blog } from "../types/blog";
 import createAxios from "@/lib/axios";
 import LoadingGrid from "../components/LoadingGrid";
@@ -14,21 +14,48 @@ import Link from "next/link";
 const ProtectedPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [blogPosts, setBlogPosts] = useState<Blog[]>([])
+  const currentPage = useRef<number>(0)
+  const [lastPage, setLastPage] = useState<number>(1)
+  const [search, setSearch] = useState<string>("");
+  const [isInitial, setIsInitial] = useState<boolean>(false);
 
   const fetchBlogPosts = async () => {
     setIsLoading(true)
 
-    await createAxios.get('/posts')
+    await createAxios.get(`/posts?page=${currentPage.current + 1}&search=${search}`)
       .then(response => {
-        setBlogPosts(response.data.posts);
+        setBlogPosts((prevItems) => currentPage.current === 0 ? response.data.posts.data : [...prevItems, ...response.data.posts.data])
+        currentPage.current = (response.data.posts.current_page)
+        setLastPage(response.data.posts.last_page)
       }).catch(() => {
-      }).finally(() => setIsLoading(false));
+      }).finally(() => setIsLoading(false))
+
+  }
+
+  const searchBlogs = async () => {
+    currentPage.current = 0
+    setBlogPosts([])
+    await fetchBlogPosts()
 
   }
 
   useEffect(() => {
-    fetchBlogPosts()
-  }, [])
+    if (isInitial === false) {
+      const timeoutId = setTimeout(() => {
+        searchBlogs()
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [search, isInitial]);
+
+
+  useEffect(() => {
+    if (isInitial === true) {
+      fetchBlogPosts()
+      setIsInitial(false)
+    }
+    
+  }, [isInitial])
 
   return (
     <Box sx={{ mt: 0 }}>
@@ -39,20 +66,16 @@ const ProtectedPage: React.FC = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit provident   adipisci est<br /> error assumenda repudiandae
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-        <TextField sx={{ width: 300 }} size="small" id="outlined-basic" placeholder="Search here..." variant="outlined" />
-        <Button variant="contained">
+        <TextField sx={{ width: 300, mr: 0.5 }} value={search} onChange={(e) => setSearch(e.target.value)} size="small" id="outlined-basic" placeholder="Search here..." variant="outlined" />
+        
+        <Button variant="contained" onClick={searchBlogs}>
           <Search />
         </Button>
       </Box>
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box width={{ sm: '100%', md: '100%' }} sx={{ p: 3, textAlign: 'center' }}>
 
-          {
-            isLoading && (
-              <LoadingGrid column={4} count={9} />
-            )
-          }
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{mb: 2}}>
             {
               blogPosts.map((post) => (
                 <Grid key={post.id} item md={4} xs={12}>
@@ -63,7 +86,30 @@ const ProtectedPage: React.FC = () => {
 
 
           </Grid>
-          <Button sx={{ mt: 2, textTransform: 'capitalize', fontWeight: 500, fontSize: 15 }} endIcon={<RotateRight />}>Load more</Button>
+          
+          {
+            isLoading && (
+              <LoadingGrid column={4} count={9} />
+            )
+          }
+          
+          {
+            (currentPage.current < lastPage) ? (
+              <Button 
+                sx={{ mt: 2, textTransform: 'capitalize', fontWeight: 500, fontSize: 15 }} 
+                endIcon={<RotateRight />}
+                onClick={() => {
+                  fetchBlogPosts();
+                }}
+              
+              >
+                  Load more
+              </Button>
+            ) : (
+              <Typography sx={{mt: 2}}>No more data</Typography>
+            )
+          }
+          
         </Box>
       </Container>
     </Box>

@@ -11,9 +11,7 @@ import LoadingButton from '@/app/components/LoadingButton';
 import Link from 'next/link';
 
 interface ValidationErrors {
-  password?: string
-  email?: string
-  name?: string
+  [key: string]: string;
 }
 
 const initialUser = {
@@ -55,7 +53,7 @@ const RegisterPage: React.FC = () => {
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach((error: Yup.ValidationError) => {
           if (error.path) {
-            validationErrors[error.path as keyof FormValues] = error.message;
+            validationErrors[error.path] = error.message;
           }
         });
       }
@@ -88,6 +86,11 @@ const RegisterPage: React.FC = () => {
 
   return (
     <>
+    <div>
+      <title>Register</title>
+      <meta name="description" content='lorem sdf asldkAccess essential travel resources, tools, and guides to help you plan and enjoy your trips' />
+      <meta name="keywords" content={`find travel tips,  hiking, diving, `} />
+    </div>
       <Container>
         <Grid container spacing={3} sx={{ mt: 3, display: 'felx', justifyContent: 'center', alignItems: 'center' }}>
           <Grid item md={6}>

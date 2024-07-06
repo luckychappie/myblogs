@@ -51,6 +51,11 @@ const page = () => {
 
     return (
         <div>
+             <div>
+                <title>{blog?.title}</title>
+                <meta name="description" content={blog?.content.slice(0, 120) } />
+                <meta name="keywords" content={`${blog?.title}, find travel tips,  hiking, diving, `} />
+              </div>
             <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
                 {
                     isLoading ? (
@@ -59,7 +64,7 @@ const page = () => {
                     
                     <Box width='65%'>
                         <Box>
-                            <img src='/blog4.jpg' width='100%' />
+                            <img src='/blog5.jpg' width='100%' />
                         </Box>
                         <Box>
                             <Typography variant="h1" sx={{ my: 1, fontSize: 20, fontWeight: 700 }}>
@@ -70,7 +75,8 @@ const page = () => {
                                     <CalendarMonth sx={{ fontSize: 15, mb: 0.5, mr: 0.5 }} /> Published at:<span className='blog-subtitle'> {formatDate(blog?.created_at)} </span>
                                 </Typography>
                                 <Typography sx={{ ml: 2, display: 'flex', alignItems: 'center' }}>
-                                    <PermIdentityIcon sx={{ fontSize: 19, mb: 0.5, mr: 0.5 }} /> Blogger: <span className='blog-subtitle'>{blog?.author?.name} </span>
+                                    <PermIdentityIcon sx={{ fontSize: 19, mb: 0.5, mr: 0.5 }} /> 
+                                    {/* Blogger: <span className='blog-subtitle'>{blog?.author?.name} </span> */}
                                 </Typography>
                             </Box>
                         </Box>

@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Installation
+You can run application with two ways.
 
-## Getting Started
+### Method 1. Installation with Docker
 
-First, run the development server:
+Ensure you have Docker Desktop installed on your Windows machine. You can download it from Docker's official website [https://www.docker.com].
+
+There are only 2 steps to run the blog website front end:
+
+Step1. run the comment on terminal:
+
+
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker-compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Step2. Now you can run [http://localhost:3000] in your browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Method 2. Manual Installation
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Ensure you have Node version 20 installed on your machine. You can download it from Node's official website [https://nodejs.org/en/download/package-manager].
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+If you need multiple node version, I would like to recomman you to use NVM.
+It can use multiple node version and easy to change.
 
-## Deploy on Vercel
+You can seee the nvm installation guide from this [https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+There are 3 easy steps to run the blog website:
+
+Step1. run the comment on terminal:
+
+
+```bash
+- npm install
+```
+
+Step2. To run the project:
+
+```bash
+ npm run dev
+```
+
+####
+To build the project, you can use this command too :
+
+```bash
+ npm run build
+```
+
+Final Step :  
+
+Now you can browse [http://localhost:3000] in your browser.

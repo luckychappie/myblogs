@@ -17,7 +17,7 @@ const BlogCardRow = (props: Props) => {
                 <CardContent sx={{p:1}}>
                     <Grid container spacing={3} sx={{alignItems: 'center'}}>
                         <Grid item xs={4}>
-                            <img src={`/${getImageUrl(props.blog.thumbnail)}`} width='70%' />
+                            <img src={`/blog5.jpg`} width='70%' alt={props.blog.title} />
                         </Grid>
                         <Grid item xs={8} sx={{textAlign: 'left'}}>
                             <Typography sx={{ fontSize: 15, color: theme.palette.primary.main, fontWeight: 500 }} gutterBottom variant="h5" component="div">
