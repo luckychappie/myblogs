@@ -12,8 +12,7 @@ import { Send } from '@mui/icons-material';
 import LoadingButton from '@/app/components/LoadingButton';
 
 interface ValidationErrors {
-  password?: string
-  email?: string
+  [key: string]: string
 }
 
 const initialUser = {
@@ -53,7 +52,7 @@ const LoginPage: React.FC = () => {
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach((error: Yup.ValidationError) => {
           if (error.path) {
-            validationErrors[error.path as keyof FormValues] = error.message;
+            validationErrors[error.path] = error.message;
           }
         });
       }
