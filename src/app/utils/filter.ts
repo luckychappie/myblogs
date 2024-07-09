@@ -12,6 +12,20 @@ export const formatDate = (date?: Date): string => {
     }
 }
 
+export const formatDateTime = (date?: Date): string => {
+    if (date) {
+        const d = new Date(date)
+        const dmy = d.toDateString();
+        const t = d.toLocaleTimeString();
+        
+
+        return `${dmy} ${t}`;
+
+    } else {
+        return ''
+    }
+}
+
 export const getImageUrl = (path: string): string => {
     return `${process.env.NEXT_PUBLIC_BASE_IMAGE_URL}${path}`;
 }

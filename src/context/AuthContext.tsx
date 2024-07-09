@@ -39,10 +39,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             headers: { Authorization: `Bearer ${token}` }
         }).then(response => {
             setUser(response.data);
-            router.push('/blogs');
         }).catch(() => {
             localStorage.removeItem('token');
-            router.push('/login');
+            router.push('/auth/login');
         }).finally(()=> setLoading(false));
     }
   }, []);

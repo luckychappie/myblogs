@@ -4,9 +4,11 @@ import { Login, Send } from '@mui/icons-material'
 import { Button, Grid, TextField } from '@mui/material'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { Comment } from '../types/blog'
 
 interface Props {
     blog_id?: number
+    setComments: React.Dispatch<React.SetStateAction<Comment[]>>
 }
 
 const CommentForm = (props: Props) => {
@@ -31,6 +33,7 @@ const CommentForm = (props: Props) => {
                     setShowSnackbar(true)
                     setSnackbarMessage('Message was sent successfully')
                     setMessage('')
+                    props.setComments((prevItems) => [...prevItems, res.data.comment])
                 })
                 .catch((error: Error) => {
                     setShowSnackbar(true)
@@ -53,7 +56,7 @@ const CommentForm = (props: Props) => {
 
     return (
         <form onSubmit={sendComment}>
-            <Grid container spacing={2} sx={{ alignItems: 'center', mt: 1 }}>
+            <Grid container spacing={2} sx={{ alignItems: 'center', mt: 0.5 }}>
                 <Grid item xs={10}>
                     Message :
                 </Grid>
